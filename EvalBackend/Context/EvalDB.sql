@@ -26,6 +26,7 @@ WHERE ClienteId IN(
 	AND FechaCompra like CONCAT('2025-',FORMAT(GETDATE(), 'MM'),'-%') 
 )
 
+
 --CREANDO TABLA PRODUCTOS
 CREATE TABLE Productos(
 	ProductoID int PRIMARY KEY IDENTITY (1,1),
@@ -45,16 +46,4 @@ UPDATE Productos
 SET Precio=	Precio + (Precio*0.1)
 WHERE Precio < 50
 
--- ACTUALIZANDO MEDIANTE STORED PROCEDURES
-CREATE PROCEDURE sp_AumentarPrecioProductos
-    @porcentaje int 
-AS
-BEGIN
-	UPDATE Productos 
-	SET Precio=	Precio + (Precio* (@porcentaje/100))
-	WHERE Precio < 50
-END;
 
-EXEC sp_AumentarPrecioProductos 10
-
-SELECT * FROM Productos
